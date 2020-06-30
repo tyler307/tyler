@@ -1,0 +1,124 @@
+{% extends 'admin/layout.html' %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/admin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/admin/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/admin/css/ace-fonts.css"/>
+    <link rel="stylesheet" href="/admin/css/ace.min.css" id="main-ace-style"/>
+    <!--[if lte IE 9]>
+			<link rel="stylesheet" href="/admin/css/ace-part2.min.css" />
+		<![endif]-->
+    <!--[if lte IE 9]>
+		  <link rel="stylesheet" href="/admin/css/ace-ie.min.css" />
+		<![endif]-->
+
+{% endblock %}
+
+
+
+{% block scripts %}
+{#		<script src="/admin/js/ace-extra.min.js"></script>#}
+{#		<!--[if lte IE 8]>#}
+{#		<script src="/admin/js/html5shiv.min.js"></script>#}
+{#		<script src="/admin/js/respond.min.js"></script>#}
+{#		<![endif]-->#}
+{% endblock %}
+
+
+{% block breadcrumbwidget %}
+    <div class="breadcrumbwidget">
+        <ul class="skins">
+            <li><a href="default" class="skin-color default"></a></li>
+            <li><a href="orange" class="skin-color orange"></a></li>
+            <li><a href="dark" class="skin-color dark"></a></li>
+            <li>&nbsp;</li>
+            <li class="fixed"><a href="" class="skin-layout fixed"></a></li>
+            <li class="wide"><a href="" class="skin-layout wide"></a></li>
+        </ul><!--skins-->
+        <ul class="breadcrumb">
+            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="#">人事管理</a> <span class="divider">/</span></li>
+            <li class="active">人事列表</li>
+        </ul>
+    </div><!--breadcrumbs-->
+{% endblock %}
+
+
+{% block pagetitle %}
+    <div class="pagetitle">
+        <h1>人事管理</h1> <span>员工人事信息管理，包括员工ID，姓名，性别，年龄，部门等</span>
+    </div><!--pagetitle-->
+{% endblock %}
+
+
+
+{% block maincontent %}
+    <h4 class="widgettitle">员工列表</h4>
+    <table class="table table-bordered">
+        <colgroup>
+            <col class="con0"/>
+            <col class="con1"/>
+            <col class="con0"/>
+            <col class="con1"/>
+            <col class="con0"/>
+            <col class="con1"/>
+            <col class="con0"/>
+            <col class="con1"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>部门</th>
+            <th>生日</th>
+            <th>工号</th>
+            <th>地址</th>
+            <th>工资</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.gender }}</td>
+                <td>{{ employee.job }}</td>
+                <td>{{ employee.birthdate.strftime('%Y-%m-%d') if employee.birthdate else None  }}</td>
+{#                <td>{{ employee.birthdate}}</td>#}
+                <td>{{ employee.idCard }}</td>
+                <td>{{ employee.address }}</td>
+                <td>{{ employee.salary }}</td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button class="btn btn-xs btn-success" title="">
+                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                        </button>
+
+                        <a href="{{ url_for('emp.emp-detail',id=employee.id) }}" class="btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </a>
+
+                        <a href="{{ url_for('emp.emp-del',id=employee.id) }}" class="btn btn-xs btn-danger">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </a>
+
+
+                    </div>
+                </td>
+
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+    <div class="divider15"></div>
+
+    <pre class="prettyprint linenums">&lt;table class=&quot;table table-bordered&quot;&gt;...&lt;/table&gt;</pre>
+
+    <div class="divider30"></div>
+{% endblock %}
